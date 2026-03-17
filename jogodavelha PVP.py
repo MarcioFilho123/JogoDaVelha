@@ -1,4 +1,5 @@
 import os
+import time
 
 #limpa a tela para aparecer apenas o tabuleiro atualizado
 def limpar_tela():
@@ -30,36 +31,6 @@ def verificar_vitoria(jogador):    #Linhas, colunas e diagonais
               for a,b,c in vitorias)
 
 
-    for i in range(9): #vencer
-        if tabuleiro[i] == ' ':
-            tabuleiro[i] = 'O'
-            if verificar_vitoria('O'): #analisa a possibilidade de vitória da IA, se tiver, joga
-                return i
-            tabuleiro[i] = ' '
-    
-    for i in range(9): #atrapalhar
-        if tabuleiro[i] == ' ':
-            tabuleiro[i] = 'X'
-            if verificar_vitoria('X'): #analisa a possibilidade de vitória do humano, se tiver, bloqueia
-                tabuleiro[i] = 'O'
-                return i
-            tabuleiro[i] = ' '
-    
-    #centro
-    if tabuleiro[4] == ' ':
-        return 4
-    
-    #cantos
-    cantos = [0,2,6,8]
-    for canto in cantos:
-        if tabuleiro[canto] == ' ':
-            return canto
-    
-    #espaço vazio qualquer
-    for i in range(9):
-        if tabuleiro[i] == ' ':
-            return i
-
 #X
 def jogada_humanoX():
     while True:
@@ -68,9 +39,9 @@ def jogada_humanoX():
             if 0 <= pos <= 8 and tabuleiro[pos] == ' ':
                 return pos
             else: #aqui puxa caso o usuário digite um número válido, mas a posição já esteja ocupada
-                print("❌ Posição inválida! Use 1-9 onde está vazio.")
+                print("POSIÇÃO INVÁLIDA! Use 1-9 onde está vazio.")
         except: #aqui puxa caso o usuário digite algo que não seja um número ou não esteja entre 1-9
-            print("❌ Digite um número de 1 a 9!")
+            print("ERRADO! Digite um número de 1 a 9!")
 
 
 #y
@@ -81,9 +52,9 @@ def jogada_humanoY():
             if 0 <= pos <= 8 and tabuleiro[pos] == ' ':
                 return pos
             else: #aqui puxa caso o usuário digite um número válido, mas a posição já esteja ocupada
-                print("❌ Posição inválida! Use 1-9 onde está vazio.")
+                print("POSIÇÃO INVÁLIDA! Use 1-9 onde está vazio.")
         except: #aqui puxa caso o usuário digite algo que não seja um número ou não esteja entre 1-9
-            print("❌ Digite um número de 1 a 9!")
+            print("ERRADO! Digite um número de 1 a 9!")
 
 
 #jogo
@@ -96,6 +67,8 @@ def jogar():
     print(" 1 2 3 ")
     print(" 4 5 6 ")
     print(" 7 8 9 ")
+    
+    time.sleep(3)
     
     turno = 0  # 0 = X, 1 = Y
     

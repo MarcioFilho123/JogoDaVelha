@@ -30,23 +30,25 @@ def verificar_vitoria(jogador):    #Linhas, colunas e diagonais
     return any(tabuleiro[a] == tabuleiro[b] == tabuleiro[c] == jogador 
               for a,b,c in vitorias)
 
-def jogada_ia(): #jogada da IA 
-    for i in range(9): #vencer
+def jogada_ia(meu, adv): #O simbolo que a IA é e símbolo da IA adversária (ou seja IA1=X,O e IA2=O,X)
+    # enta vencer
+    for i in range(9):
         if tabuleiro[i] == ' ':
-            tabuleiro[i] = 'O'
-            if verificar_vitoria('O'): #analisa a possibilidade de vitória da IA, se tiver, joga
+            tabuleiro[i] = meu
+            if verificar_vitoria(meu):
                 return i
             tabuleiro[i] = ' '
     
-    for i in range(9): #atrapalhar
+    # enta bloquear
+    for i in range(9):
         if tabuleiro[i] == ' ':
-            tabuleiro[i] = 'X'
-            if verificar_vitoria('X'): #analisa a possibilidade de vitória do humano, se tiver, bloqueia
-                tabuleiro[i] = 'O'
+            tabuleiro[i] = adv
+            if verificar_vitoria(adv):
+                tabuleiro[i] = meu
                 return i
             tabuleiro[i] = ' '
     
-    #centro
+    # entro
     if tabuleiro[4] == ' ':
         return 4
     
@@ -61,52 +63,48 @@ def jogada_ia(): #jogada da IA
         if tabuleiro[i] == ' ':
             return i
 
-#jogaddor
-def jogada_humano():
-    while True:
-        try:
-            pos = int(input("\nSua jogada (1-9): ")) - 1
-            if 0 <= pos <= 8 and tabuleiro[pos] == ' ':
-                return pos
-            else: #aqui puxa caso o usuário digite um número válido, mas a posição já esteja ocupada
-                print("POSIÇÃO INVÁLIDA! Use 1-9 onde está vazio.")
-        except: #aqui puxa caso o usuário digite algo que não seja um número ou não esteja entre 1-9
-            print("ERRADO! Digite um número de 1 a 9!")
 
 #jogo
 def jogar():
     global tabuleiro
     tabuleiro = [' ' for _ in range(9)]
     
-    print("#JOGO DA VELHA#")
-    print("Você é X | IA é O")
+    print("#JOGO DA VELHA - IA vs IA#")
+    print("IA 1 = X | IA 2 = O")
     print(" 1 2 3 ")
     print(" 4 5 6 ")
     print(" 7 8 9 ")
     
-    time.sleep(3)
+    time.sleep(3) #pausa para que possamos ver as jogadas de 3 em 3 segundos
+    #ou seja instântaneo o resultado do jogo
     
-    turno = 0  # 0 = humano, 1 = IA
+    turno = 0  
+    #0 é IA1=X
+    #1 é IA2=O
     
     while True:
         desenhar_tabuleiro()
         
-        if turno == 0:  #HUMANO VENCEU
-            pos = jogada_humano()
+        if turno == 0:
+            print("\nIA 1 (X) pensando...")
+            time.sleep(3)
+            pos = jogada_ia('X', 'O')
             tabuleiro[pos] = 'X'
             
             if verificar_vitoria('X'):
                 desenhar_tabuleiro()
-                print("O HUMANO VENCEU!")
+                print("IA 1 (X) VENCEU!")
                 break
                 
-        else:  #IA VENCEU
-            pos = jogada_ia()
+        else:
+            print("\nIA 2 (O) pensando...")
+            time.sleep(3)
+            pos = jogada_ia('O', 'X')
             tabuleiro[pos] = 'O'
             
             if verificar_vitoria('O'):
                 desenhar_tabuleiro()
-                print("A IA VENCEU!")
+                print("IA 2 (O) VENCEU!")
                 break
         
         #deu velha
