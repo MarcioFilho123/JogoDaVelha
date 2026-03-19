@@ -77,20 +77,18 @@ def jogada_ia(meu_simbolo, simbolo_adversario): #jogada da IA
             
     #melhorar a IA para que ela possa ter mais variações de jogadas
     #centro
-    for i in range(1):  #testa 1 vez
-        if random.random(0,1.0) < 0.5:  #50% de chance de escolher o centro quando disponível
-            if tabuleiro[4] == ' ':
-                return 4
-        else: 
-            pass #acho que tem como modificar e melhorar 
+    if tabuleiro[4] == ' ' and random.random() < 0.5:  #50% centro. 
+        return 4 #acho que tem como modificar e melhorar 
+    # == ' ' se está vazio e se o randomico é menor que 0.5
     
     #cantos
     cantos = [0,2,6,8]
     for canto in random.sample(cantos, len(cantos)): 
         if tabuleiro[canto] == ' ':
             return canto
+    #randomiza os cantos que vai ser jogado
     
-    #espaço vazio qualquer
+    #espaço vazio qualquer, talvez eu remova essa função
     for i in range(9):
         if tabuleiro[i] == ' ':
             return i
@@ -278,7 +276,7 @@ def jogar_novamente(modo): #recebe o modo atual como parâmetro
         print("\n   S = Sim (mesmo modo)")
         print("\n   N = Sair")
         print("\n   M = Menu principal (escolher modo)")
-        resposta = input(" ").lower().strip()
+        resposta = input("\n           ").lower().strip()
         
         if resposta in ['s', 'sim', 'y', 'yes']:
             return modo  #retorna o MESMO modo para continuar no mesmo tipo de jogo
