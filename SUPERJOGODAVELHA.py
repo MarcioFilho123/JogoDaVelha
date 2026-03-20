@@ -276,7 +276,7 @@ def jogar_novamente(modo): #recebe o modo atual como parâmetro
         print("\n   S = Sim (mesmo modo)")
         print("\n   N = Sair")
         print("\n   M = Menu principal (escolher modo)")
-        resposta = input("\n           ").lower().strip()
+        resposta = input("\n           """).lower().strip()
         
         if resposta in ['s', 'sim', 'y', 'yes']:
             return modo  #retorna o MESMO modo para continuar no mesmo tipo de jogo
@@ -286,7 +286,7 @@ def jogar_novamente(modo): #recebe o modo atual como parâmetro
             exit()  
         
         elif resposta in['m', 'menu']:
-            return None  #retorna None para voltar ao menu principal    
+            return main()  #retorna None para voltar ao menu principal    
             
         else:
             print("Resposta inválida! Digite S/N, SIM/NÃO ou Y/N")
